@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import bmiReducer from "./features/bmiSlice";
+import bmiReducer from "./features/bmiSlice"; // ✅ Correct import
 
 export const store = configureStore({
   reducer: {
-    bmi: bmiReducer,
+    bmi: bmiReducer, // ✅ Ensure this exists
   },
 });
 

@@ -25,18 +25,19 @@ const bmiSlice = createSlice({
       state.height = action.payload;
     },
     calculateBMI: (state) => {
-      if (state.height > 0 && state.weight > 0) {
-        let heightInMeters = state.height / 100;
-        let bmiValue = state.weight / (heightInMeters * heightInMeters);
-        state.bmi = parseFloat(bmiValue.toFixed(2));
+      if (state.weight > 0 && state.height > 0) {
+        const heightInMeters = state.height / 100;
+        state.bmi = parseFloat((state.weight / (heightInMeters * heightInMeters)).toFixed(2));
 
-        if (bmiValue < 18.5) state.category = "Underweight";
-        else if (bmiValue < 24.9) state.category = "Normal weight";
-        else if (bmiValue < 29.9) state.category = "Overweight";
-        else state.category = "Obese";
-      } else {
-        state.bmi = null;
-        state.category = "";
+        if (state.bmi < 18.5) {
+          state.category = "Underweight";
+        } else if (state.bmi < 24.9) {
+          state.category = "Normal weight";
+        } else if (state.bmi < 29.9) {
+          state.category = "Overweight";
+        } else {
+          state.category = "Obese";
+        }
       }
     },
   },

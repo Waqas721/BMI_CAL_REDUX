@@ -1,16 +1,22 @@
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-interface Context {
-  params: undefined;
-}
+export async function POST(request: Request) {
+  try {
+    // Parse the request body
+    const body = await request.json();
 
-export async function POST(request: NextRequest, context: Context) {
-  const body: { amount: number } = await request.json();
-  const { amount = 1 } = body;
+    // Validate the input
+    if (typeof body.counter !== 'number') {
+      return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
+    }
 
-  // simulate IO latency
-  await new Promise((resolve) => setTimeout(resolve, 500));
+    // Increment the counter
+    const counter = body.counter + 1;
 
-  return NextResponse.json({ data: amount });
+    // Return the updated counter
+    return NextResponse.json({ counter }, { status: 200 });
+  } catch (error) {
+    // Handle errors
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
 }
